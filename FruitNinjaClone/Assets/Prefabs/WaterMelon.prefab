@@ -15,6 +15,14 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1576
       objectReference: {fileID: 0}
+    - target: {fileID: 2697911927229713869, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2697911927519375924, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2697911928189289233, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -27,9 +35,17 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1579
       objectReference: {fileID: 0}
+    - target: {fileID: 2697911928934152342, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2697911928960669730, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_Name
       value: WaterMelon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2697911928960669730, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2697911928960669731, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_RootOrder
