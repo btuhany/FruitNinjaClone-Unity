@@ -4,7 +4,7 @@ public class FruitSpawnerController : MonoBehaviour
 {
     [SerializeField] float _minThrowForce;
     [SerializeField] float _maxThrowForce;
-    [SerializeField] Rigidbody[] _fruitPrefabs;
+    [SerializeField] FruitController[] _fruitPrefabs;
     [SerializeField][Range(-80, 0)] float _minAngle;
     [SerializeField][Range(0, 80)] float _maxAngle;
     [SerializeField] Transform _minSpawnPointTransform;
@@ -21,6 +21,11 @@ public class FruitSpawnerController : MonoBehaviour
         {
             SpawnThrowRandomFruitPosAngle();
         }
+        else if(Input.GetKeyDown(KeyCode.F))
+        {
+            SpawnThrowRandomFruitPosAngle();
+        }
+
     }
     void SpawnThrowRandomFruitPosAngle()
     {
@@ -30,8 +35,8 @@ public class FruitSpawnerController : MonoBehaviour
     }
     void SpawnAndThrowRandomFruit()
     {
-        Rigidbody newFruitRb = Instantiate(_fruitPrefabs[Random.Range(0, _fruitPrefabs.Length)], this.transform.position, this.transform.rotation);
-        newFruitRb.AddForce(_transform.up * Random.Range(_minThrowForce,_maxThrowForce));
+        FruitController newFruitRb = Instantiate(_fruitPrefabs[Random.Range(0, _fruitPrefabs.Length)], this.transform.position, this.transform.rotation);
+        newFruitRb.WholeFruitRb.AddForce(_transform.up * Random.Range(_minThrowForce,_maxThrowForce));
     }
     void SetRandomPos()
     {
