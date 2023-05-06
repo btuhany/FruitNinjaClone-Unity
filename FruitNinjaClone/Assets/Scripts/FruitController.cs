@@ -27,19 +27,37 @@ public class FruitController : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             GetSliced();
+            HandleSlicedFruitsMovement(BladeController.Instance.Direction, BladeController.Instance.Velocity, BladeController.Instance.TransformPos);
         }
-        Debug.Log("yess");
+       
     }
     public void GetSliced()
     {
         _colliders[0].enabled = false;
         _slicedFruit.SetActive(true);
-        _rigidbodies[1].velocity = _rigidbodies[0].velocity;
-        _rigidbodies[2].velocity = _rigidbodies[0].velocity;
-        _colliders[1].enabled = true;
-        _colliders[2].enabled = true;
+        for (int i = 1; i < _rigidbodies.Length; i++)
+        {
+            _rigidbodies[i].velocity = _rigidbodies[0].velocity;
+            _colliders[i].enabled = true;
+        }
         _wholeFruit.SetActive(false);
 
+
+    }
+    public void HandleSlicedFruitsMovement(Vector3 bladeDirection, float bladeForce, Vector3 bladePos)
+    {
+        float additionalForce = Mathf.Clamp(bladeForce, 4f, 9f);
+        float angle = Mathf.Atan2(bladeDirection.y, bladeDirection.x) * Mathf.Rad2Deg;
+        _slicedFruit.transform.rotation = Quaternion.Euler(0, 0, angle);
+        if (bladeDirection.magnitude < 1f) 
+        {
+            bladeDirection = Vector3.down / 3f;   //parametric?
+        }
+        for (int i = 1; i < _rigidbodies.Length; i++)
+        {
+            _rigidbodies[i].AddForceAtPosition(bladeDirection * additionalForce, bladePos, ForceMode.Impulse);
+        }
        
     }
+    
 }

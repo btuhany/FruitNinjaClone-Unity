@@ -1,5 +1,3 @@
-using TMPro;
-using UnityEditor.Performance.ProfileAnalyzer;
 using UnityEngine;
 
 public class BladeController : MonoBehaviour
@@ -11,8 +9,15 @@ public class BladeController : MonoBehaviour
     TrailRenderer _trail;
     float _initialMainCamZpos;
     float _initialBladeZpos;
+    public Vector3 Direction { get; private set; }
+    public Vector3 TransformPos { get => _transform.position;}
+    public float Velocity { get => Direction.magnitude/Time.deltaTime; }
+
+    public static BladeController Instance;
+
     private void Awake()
     {
+        Instance = this;
         _collider = GetComponent<SphereCollider>();
         _mainCam = Camera.main;
         _transform = transform;
@@ -69,9 +74,8 @@ public class BladeController : MonoBehaviour
         Vector3 newPos = _mainCam.ScreenToWorldPoint(mousePos);
         //Debug.Log(newPos);
         newPos.z = _initialBladeZpos;
+        Direction = (newPos - _transform.position);
         _transform.position = newPos;
-      
-        
     }
 
 
