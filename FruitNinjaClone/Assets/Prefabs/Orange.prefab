@@ -111,6 +111,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2969645451144484293, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 69c5a2bf0ed0d2f4a9316c526d896d02, type: 2}
     - target: {fileID: 6678277633478304974, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -123,6 +127,14 @@ PrefabInstance:
       propertyPath: _slicedFruit
       value: 
       objectReference: {fileID: 4251282913513029052}
+    - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: _splashPrefab
+      value: 
+      objectReference: {fileID: -2484220536484401600, guid: 411a8dbb206e4534db73b228cec5ad8c, type: 3}
+    - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: _backgroundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2697911928189289232, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
@@ -136,37 +148,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2697911927789895991, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
   m_PrefabInstance: {fileID: 2274176883219582856}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4251282914933217194 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2697911928960669730, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
-  m_PrefabInstance: {fileID: 2274176883219582856}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &8741766339414590766
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4251282914933217194}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 24
-  m_CollisionDetection: 2
---- !u!135 &263796028460404763
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4251282914933217194}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7484053
-  m_Center: {x: 0, y: 0.009032946, z: 0}

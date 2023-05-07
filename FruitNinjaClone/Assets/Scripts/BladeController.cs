@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class BladeController : MonoBehaviour
@@ -49,6 +50,7 @@ public class BladeController : MonoBehaviour
         {
             HandleBladeSlicingActions();
         }
+       
 
     }
     void ActivateBlade()
@@ -76,6 +78,8 @@ public class BladeController : MonoBehaviour
         newPos.z = _initialBladeZpos;
         Direction = (newPos - _transform.position);
         _transform.position = newPos;
+
+        
     }
 
 

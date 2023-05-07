@@ -6,16 +6,22 @@ public class FruitController : MonoBehaviour
 {
     [SerializeField] GameObject _wholeFruit;
     [SerializeField] GameObject _slicedFruit;
-
-    
+    [SerializeField] LayerMask _backgroundLayer;
+    [SerializeField] SplashController _splashPrefab;
+    [SerializeField] float _splashFadeTime=1f;
     Collider[] _colliders;
     Rigidbody[] _rigidbodies;
-
+    ParticleSystem _particle;
+    Color _splashColor;
+    Transform _transform;
     public Rigidbody WholeFruitRb => _rigidbodies[0];
     private void Awake()
     {
         _colliders = GetComponentsInChildren<Collider>();
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
+        _particle = GetComponentInChildren<ParticleSystem>();
+        _splashColor = GetComponentInChildren<MeshRenderer>().material.color;
+        _transform = transform;
     }
     private void OnEnable()
     {
@@ -31,6 +37,7 @@ public class FruitController : MonoBehaviour
         }
        
     }
+
     public void GetSliced()
     {
         _colliders[0].enabled = false;
@@ -41,7 +48,8 @@ public class FruitController : MonoBehaviour
             _colliders[i].enabled = true;
         }
         _wholeFruit.SetActive(false);
-
+        _particle.Play();
+        HandleSplash();
 
     }
     public void HandleSlicedFruitsMovement(Vector3 bladeDirection, float bladeForce, Vector3 bladePos)
@@ -58,6 +66,16 @@ public class FruitController : MonoBehaviour
             _rigidbodies[i].AddForceAtPosition(bladeDirection * additionalForce, bladePos, ForceMode.Impulse);
         }
        
+    }
+    public void HandleSplash()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(_transform.position, _transform.position-Camera.main.transform.position, out hit, 500f , _backgroundLayer))
+        {
+           SplashController newSplash = Instantiate(_splashPrefab, hit.point, hit.transform.rotation);
+           newSplash.DoSplash(_splashColor, _splashFadeTime);
+        }
+          //  Debug.DrawRay(transform.position, (transform.position - Camera.main.transform.position)  * 500f, Color.yellow);
     }
     
 }
