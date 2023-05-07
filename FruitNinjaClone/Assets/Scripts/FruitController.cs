@@ -28,18 +28,11 @@ public class FruitController : MonoBehaviour
         _slicedFruit.SetActive(false);
         _wholeFruit.SetActive(true);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            GetSliced();
-            HandleSlicedFruitsMovement(BladeController.Instance.Direction, BladeController.Instance.Velocity, BladeController.Instance.TransformPos);
-        }
-       
-    }
+
 
     public void GetSliced()
     {
+             _transform.position = _wholeFruit.transform.position;
         _colliders[0].enabled = false;
         _slicedFruit.SetActive(true);
         for (int i = 1; i < _rigidbodies.Length; i++)
@@ -47,12 +40,14 @@ public class FruitController : MonoBehaviour
             _rigidbodies[i].velocity = _rigidbodies[0].velocity;
             _colliders[i].enabled = true;
         }
+            
         _wholeFruit.SetActive(false);
         _particle.Play();
         HandleSplash();
+        HandleSlicedFruitsMovement(BladeController.Instance.Direction, BladeController.Instance.Velocity, BladeController.Instance.TransformPos);
 
     }
-    public void HandleSlicedFruitsMovement(Vector3 bladeDirection, float bladeForce, Vector3 bladePos)
+    void HandleSlicedFruitsMovement(Vector3 bladeDirection, float bladeForce, Vector3 bladePos)
     {
         float additionalForce = Mathf.Clamp(bladeForce, 4f, 9f);
         float angle = Mathf.Atan2(bladeDirection.y, bladeDirection.x) * Mathf.Rad2Deg;
