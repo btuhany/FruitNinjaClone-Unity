@@ -29,10 +29,8 @@ public class FruitController : MonoBehaviour,IPoolable
     }
     private void OnEnable()
     {
-        _slicedFruit.SetActive(false);
-        _wholeFruit.SetActive(true);
+        GetUnsliced();
     }
-
     void GetUnsliced()
     {
         _wholeFruit.transform.localPosition = Vector3.zero;
@@ -59,18 +57,23 @@ public class FruitController : MonoBehaviour,IPoolable
         GameManager.Instance.IncreaseScore();
 
     }
+
     void HandleSlicedFruitsMovement(Vector3 bladeDirection, float bladeForce, Vector3 bladePos)
     {
-        float additionalForce = Mathf.Clamp(bladeForce, 4f, 9f);
+        float additionalForce = Mathf.Clamp(bladeForce, 0.5f, 3f);
+        if (bladeDirection.magnitude < 0.2f)
+        {
+
+            bladeDirection = Vector3.down / 2;   //parametric?
+        }
         float angle = Mathf.Atan2(bladeDirection.y, bladeDirection.x) * Mathf.Rad2Deg;
         _slicedFruit.transform.rotation = Quaternion.Euler(0, 0, angle);
-        if (bladeDirection.magnitude < 0.2f) 
-        {
-            bladeDirection = Vector3.down / 3f;   //parametric?
-        }
+        Debug.Log(additionalForce);
         for (int i = 1; i < _rigidbodies.Length; i++)
         {
-            _rigidbodies[i].AddForceAtPosition(bladeDirection * additionalForce , bladePos, ForceMode.Impulse);
+            _rigidbodies[i].velocity = _rigidbodies[i].velocity * 0.3f;
+            _rigidbodies[i].AddForceAtPosition(bladeDirection.normalized * additionalForce , bladePos, ForceMode.Impulse);
+            _rigidbodies[i].velocity = new Vector3(_rigidbodies[i].velocity.x, _rigidbodies[i].velocity.y+2f, _rigidbodies[i].velocity.z);
         }
 
     }

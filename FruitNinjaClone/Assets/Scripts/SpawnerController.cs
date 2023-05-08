@@ -41,6 +41,7 @@ public class SpawnerController : MonoBehaviour
         if(Random.value<_bombProbability)
         {
             BombController newBomb = Instantiate(_bombPrefab, _transform.position, _transform.rotation);
+            //BombController newBomb = ObjectPoolManager.Instance.GetObjFromPool(PoolID.Bomb);
             newBomb.Rb.AddForce(_transform.up * Random.Range(_minThrowForce, _maxThrowForce));
             newBomb.Rb.AddTorque(_transform.forward * Random.Range(-200f,200f));
         }
