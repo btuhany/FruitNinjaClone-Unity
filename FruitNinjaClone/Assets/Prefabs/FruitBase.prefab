@@ -3740,6 +3740,7 @@ MonoBehaviour:
     m_Bits: 0
   _splashPrefab: {fileID: 0}
   _splashFadeTime: 10
+  _poolID: 0
 --- !u!1 &4949344830985899986
 GameObject:
   m_ObjectHideFlags: 0

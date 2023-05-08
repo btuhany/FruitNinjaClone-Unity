@@ -203,6 +203,18 @@ PrefabInstance:
       propertyPath: _backgroundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 8472469966276969515, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Radius
+      value: 2.510599
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472469966276969515, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Center.y
+      value: 0.013211582
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472469966276969515, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Center.z
+      value: 0.006257849
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2697911928189289232, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}

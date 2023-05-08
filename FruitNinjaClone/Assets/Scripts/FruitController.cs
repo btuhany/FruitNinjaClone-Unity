@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FruitController : MonoBehaviour
+public class FruitController : MonoBehaviour,IPoolable
 {
     [SerializeField] GameObject _wholeFruit;
     [SerializeField] GameObject _slicedFruit;
     [SerializeField] LayerMask _backgroundLayer;
     [SerializeField] SplashController _splashPrefab;
     [SerializeField] float _splashFadeTime=1f;
+    [SerializeField] PoolID _poolID;
     Collider[] _colliders;
     Rigidbody[] _rigidbodies;
     ParticleSystem _particle;
     Color _splashColor;
     Transform _transform;
     public Rigidbody WholeFruitRb => _rigidbodies[0];
+
+    public PoolID PoolID => _poolID;
+
     private void Awake()
     {
         _colliders = GetComponentsInChildren<Collider>();
@@ -29,10 +33,17 @@ public class FruitController : MonoBehaviour
         _wholeFruit.SetActive(true);
     }
 
-
+    void GetUnsliced()
+    {
+        _wholeFruit.transform.localPosition = Vector3.zero;
+        _rigidbodies[1].MovePosition(Vector3.zero);
+        _rigidbodies[2].MovePosition(Vector3.zero);
+        _slicedFruit.SetActive(false);
+        _wholeFruit.SetActive(true);
+    }
     public void GetSliced()
     {
-             _transform.position = _wholeFruit.transform.position;
+        _transform.position = _wholeFruit.transform.position;
         _colliders[0].enabled = false;
         _slicedFruit.SetActive(true);
         for (int i = 1; i < _rigidbodies.Length; i++)
@@ -53,15 +64,15 @@ public class FruitController : MonoBehaviour
         float additionalForce = Mathf.Clamp(bladeForce, 4f, 9f);
         float angle = Mathf.Atan2(bladeDirection.y, bladeDirection.x) * Mathf.Rad2Deg;
         _slicedFruit.transform.rotation = Quaternion.Euler(0, 0, angle);
-        if (bladeDirection.magnitude < 1f) 
+        if (bladeDirection.magnitude < 0.2f) 
         {
             bladeDirection = Vector3.down / 3f;   //parametric?
         }
         for (int i = 1; i < _rigidbodies.Length; i++)
         {
-            _rigidbodies[i].AddForceAtPosition(bladeDirection * additionalForce, bladePos, ForceMode.Impulse);
+            _rigidbodies[i].AddForceAtPosition(bladeDirection * additionalForce , bladePos, ForceMode.Impulse);
         }
-       
+
     }
     public void HandleSplash()
     {

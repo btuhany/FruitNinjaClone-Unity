@@ -124,6 +124,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: _poolID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: _wholeFruit
       value: 
       objectReference: {fileID: 1564698469394835740}
@@ -138,6 +142,14 @@ PrefabInstance:
     - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: _backgroundLayer.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472469966276969515, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Radius
+      value: 2.3354914
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472469966276969515, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Center.z
+      value: -0.033141673
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2697911928189289232, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}

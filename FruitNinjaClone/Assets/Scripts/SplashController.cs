@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class SplashController : MonoBehaviour
+public class SplashController : MonoBehaviour, IPoolable
 {
-
+    [SerializeField] PoolID _poolID;
+    public PoolID PoolID => _poolID;
     SpriteRenderer _sprite;
     Transform _transform;
     private void Awake()

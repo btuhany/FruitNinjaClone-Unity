@@ -1,8 +1,12 @@
 using UnityEngine;
 
-public class BombController : MonoBehaviour
+public class BombController : MonoBehaviour, IPoolable
 {
+    [SerializeField] PoolID _poolID;
+    public PoolID PoolID => _poolID;
     public Rigidbody Rb;
+
+
     private void Awake()
     {
         Rb= GetComponent<Rigidbody>();

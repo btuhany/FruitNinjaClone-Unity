@@ -78,7 +78,8 @@ public class BladeController : MonoBehaviour
         Vector3 newPos = _mainCam.ScreenToWorldPoint(mousePos);
         //Debug.Log(newPos);
         newPos.z = _initialBladeZpos;
-        Direction = (newPos - _transform.position);
+        if(newPos != _transform.position)
+            Direction = (newPos - _transform.position);
         _transform.position = newPos;
 
         
