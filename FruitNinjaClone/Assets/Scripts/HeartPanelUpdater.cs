@@ -22,19 +22,15 @@ public class HeartPanelUpdater : MonoBehaviour
         switch (CurrentLive)
         {
             case 3:
-                _text[0].SetText("XXX");
                 _text[1].SetText("");
                 break;
             case 2:
-                _text[0].SetText(" XX");
                 _text[1].SetText("X");
                 break;
             case 1:
-                _text[0].SetText("  X");
                 _text[1].SetText("XX");
                 break;
             case 0:
-                _text[0].SetText("");
                 _text[1].SetText("XXX");
                 break;
             default:

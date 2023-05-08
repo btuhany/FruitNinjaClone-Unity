@@ -1787,7 +1787,7 @@ GameObject:
   - component: {fileID: 3109841607910118153}
   m_Layer: 0
   m_Name: WholeFruit
-  m_TagString: Untagged
+  m_TagString: WholeFruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
