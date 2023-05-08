@@ -15,10 +15,11 @@ public class BladeController : MonoBehaviour
     public float Velocity { get => Direction.magnitude/Time.deltaTime; }
 
     public static BladeController Instance;
-
+    public bool CanReadInput = true;
     private void Awake()
     {
         Instance = this;
+        CanReadInput = true;
         _collider = GetComponent<SphereCollider>();
         _mainCam = Camera.main;
         _transform = transform;
@@ -37,6 +38,7 @@ public class BladeController : MonoBehaviour
 
     private void Update()
     {
+        if (!CanReadInput) return;
         if(Input.GetMouseButtonDown(0))
         {
             ActivateBlade();

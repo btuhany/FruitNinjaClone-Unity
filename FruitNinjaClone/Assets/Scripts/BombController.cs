@@ -12,6 +12,8 @@ public class BombController : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             HandleOnBladeHit();
+         
+
         }
     }
     void HandleOnBladeHit()
