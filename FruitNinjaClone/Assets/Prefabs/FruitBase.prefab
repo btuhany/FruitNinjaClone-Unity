@@ -1847,8 +1847,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 24
-  m_CollisionDetection: 1
+  m_Constraints: 56
+  m_CollisionDetection: 2
 --- !u!1 &2697911928189289238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3738,9 +3738,10 @@ MonoBehaviour:
   _backgroundLayer:
     serializedVersion: 2
     m_Bits: 0
-  _splashPrefab: {fileID: 0}
-  _splashFadeTime: 10
   _poolID: 0
+  _splashFadeTime: 10
+  _timeToSetPool: 6
+  _halfFruitsTransforms: []
 --- !u!1 &4949344830985899986
 GameObject:
   m_ObjectHideFlags: 0

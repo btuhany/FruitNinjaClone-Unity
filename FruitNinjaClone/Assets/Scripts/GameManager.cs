@@ -32,10 +32,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    public void Restart()
-    {
-
-    }
     public void IncreaseScore()
     {
         CurrentScore++;

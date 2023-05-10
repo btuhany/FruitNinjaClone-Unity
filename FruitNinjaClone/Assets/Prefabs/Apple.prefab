@@ -101,15 +101,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2697911928960669731, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 2697911928960669731, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 2697911928960669731, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.7
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 2697911928960669731, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_LocalPosition.x
@@ -155,6 +155,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9cd8cf74a84c3764db115ad0b8789324, type: 2}
+    - target: {fileID: 3109841607910118153, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_Constraints
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109841607910118153, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6678277633478304974, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -199,6 +207,10 @@ PrefabInstance:
       propertyPath: _splashPrefab
       value: 
       objectReference: {fileID: -2484220536484401600, guid: 411a8dbb206e4534db73b228cec5ad8c, type: 3}
+    - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
+      propertyPath: _timeToSetPool
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7908468393694298211, guid: 8eac24a7c059c984db6f7f411481e068, type: 3}
       propertyPath: _backgroundLayer.m_Bits
       value: 64

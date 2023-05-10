@@ -11,7 +11,9 @@ public class WholeFruitController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("!!");
             _fruitController.GetSliced();
+
         }
 
     }

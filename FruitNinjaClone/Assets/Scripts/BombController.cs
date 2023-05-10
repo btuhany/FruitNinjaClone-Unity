@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BombController : MonoBehaviour, IPoolable
+public class BombController : MonoBehaviour
 {
     [SerializeField] PoolID _poolID;
     public PoolID PoolID => _poolID;
@@ -11,13 +11,20 @@ public class BombController : MonoBehaviour, IPoolable
     {
         Rb= GetComponent<Rigidbody>();
     }
+    private void OnDisable()
+    {
+        Rb.velocity= Vector3.zero;
+        
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
             HandleOnBladeHit();
-         
-
+        }
+        else if(other.CompareTag("Fall"))
+        {
+            ObjectPoolManager.Instance.SetObjToPool(this, PoolID.Bomb);
         }
     }
     void HandleOnBladeHit()

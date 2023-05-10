@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SplashController : MonoBehaviour, IPoolable
+public class SplashController : MonoBehaviour
 {
     [SerializeField] PoolID _poolID;
     public PoolID PoolID => _poolID;
@@ -41,10 +41,13 @@ public class SplashController : MonoBehaviour, IPoolable
             float alphaVal = Mathf.Lerp(_sprite.color.a, 0, Time.deltaTime);
             _sprite.color = new Color(_sprite.color.r, _sprite.color.g,_sprite.color.b, alphaVal);
             elapsed += Time.deltaTime;
-  
+            if (alphaVal < 0.01f)
+                break;
             yield return null;
         }
         
         _sprite.color = new Color(_sprite.color.r, _sprite.color.g, _sprite.color.b, 0);
+        ObjectPoolManager.Instance.SetObjToPool(this, PoolID.Splash);
+        yield return null;
     }
 }
