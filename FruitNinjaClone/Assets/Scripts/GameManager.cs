@@ -1,16 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameUIController _ui;
+    [SerializeField] float _startDelay;
     public static GameManager Instance;
     public event System.Action OnBestScoreChanged;
     public event System.Action OnScoreChanged;
     public event System.Action OnLivesChanged;
+    public event System.Action OnGameOver;
 
-    public int CurrentScore=0;
-    public int BestScore=0;
-    public int Lives = 3;
-    public int LastBestScore = 0;
+    public bool IsGameOn;
+    [HideInInspector] public int CurrentScore=0;
+    [HideInInspector] public int BestScore=0;
+    [HideInInspector] public int Lives = 3;
+    [HideInInspector] public int LastBestScore = 0;
     
     private void Awake()
     {
@@ -20,6 +25,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InvokeUIEvents();
+        BladeController.Instance.CanReadInput = false;
+        IsGameOn = false;
+        StartCoroutine(StartGameWithCountdownDelay(_startDelay));
+    }
+    public void Restart()
+    {
+        Debug.Log("Restart");
+    }
+    public void StartTheGame()
+    {
+        IsGameOn = true;
+        BladeController.Instance.CanReadInput = true;
     }
     public void GameOver()
     {
@@ -30,7 +47,8 @@ public class GameManager : MonoBehaviour
         }
         BladeController.Instance.CanReadInput = false;
         Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.Locked;
+        
+        OnGameOver?.Invoke();
     }
     public void IncreaseScore()
     {
@@ -54,5 +72,12 @@ public class GameManager : MonoBehaviour
         OnScoreChanged?.Invoke();
         OnBestScoreChanged?.Invoke();
         OnLivesChanged?.Invoke();
+    }
+    IEnumerator StartGameWithCountdownDelay(float delay)
+    {
+        _ui.StartCountDown(delay);
+        yield return new WaitForSeconds(delay);
+        StartTheGame();
+        yield return null;
     }
 }
