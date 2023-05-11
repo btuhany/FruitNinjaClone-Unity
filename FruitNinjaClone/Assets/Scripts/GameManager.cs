@@ -25,22 +25,29 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        InvokeUIEvents();
-     //   BladeController.Instance.CanReadInput = false;
-        StartCoroutine(StartGameWithCountdownDelay(_startDelay));
+        
+        //   BladeController.Instance.CanReadInput = false;
+        GameSetupAndStart();
     }
     public void Restart()
     {
         // BladeController.Instance.CanReadInput = false;
+        GameSetupAndStart();
+    }
+    void GameSetupAndStart()
+    {
         CurrentScore = 0;
         Lives = 3;
         InvokeUIEvents();
+        SoundManager.Instance.PlaySound(4);
+        SoundManager.Instance.PlaySoundDelayed(0);
         StartCoroutine(StartGameWithCountdownDelay(_startDelay));
     }
     public void StartTheGame()
     {
         OnGameStart?.Invoke();
         _isGameOn = true;
+        
        // BladeController.Instance.CanReadInput = true; //Obsrv pattern? event
     }
     public void GameOver()
@@ -48,6 +55,8 @@ public class GameManager : MonoBehaviour
         if (!_isGameOn) return;
         _isGameOn = false;
         OnGameOver?.Invoke();
+        SoundManager.Instance.StopAllSounds();
+        SoundManager.Instance.PlaySoundDelayed(6);
         if(BestScore>=LastBestScore)
         {
             LastBestScore=BestScore;

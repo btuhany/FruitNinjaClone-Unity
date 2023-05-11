@@ -78,7 +78,7 @@ public class FruitController : MonoBehaviour
         HandleSplash();
         HandleSlicedFruitsMovement(BladeController.Instance.Direction, BladeController.Instance.Velocity, BladeController.Instance.TransformPos);
         GameManager.Instance.IncreaseScore();
-
+        SoundManager.Instance.PlaySliceSound();
     }
 
     void HandleSlicedFruitsMovement(Vector3 bladeDirection, float bladeForce, Vector3 bladePos)

@@ -18,6 +18,7 @@ public class BladeController : MonoBehaviour
 
     public static BladeController Instance;
     bool _canReadInput;
+    bool _canMakeSound;
     float _initialTrailTime;
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class BladeController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _initialTrailTime = _trail.time;
         _initialBladeZpos = _transform.position.z;
+        _canMakeSound = true;
     }
     private void OnEnable()
     {
@@ -94,16 +96,32 @@ public class BladeController : MonoBehaviour
         Vector3 newPos = _mainCam.ScreenToWorldPoint(mousePos);
         //Debug.Log(newPos);
         newPos.z = _initialBladeZpos;
+        //Debug.Log(newPos.magnitude - _transform.position.magnitude);
+        if (Mathf.Abs(newPos.magnitude - _transform.position.magnitude) > 0.06f && _canMakeSound)
+        {
+            SoundManager.Instance.PlaySoundRandomPitch(1,0.85f,1.1f);
+            StartCoroutine(SoundDelay());
+        }
         if(newPos != _transform.position)
             Direction = (newPos - _transform.position);
         _transform.position = newPos;
 
         
     }
+    WaitForSeconds soundDelay = new WaitForSeconds(0.15f);
+    WaitForSeconds trailEffect = new WaitForSeconds(0.7f);
+    IEnumerator SoundDelay()
+    {
+        _canMakeSound= false;
+        yield return soundDelay;
+        _canMakeSound = true;
+        yield return null;
+
+    }
     IEnumerator TrailEffect()
     {
         _trail.time = 10f;
-        yield return new WaitForSeconds(0.7f);
+        yield return trailEffect;
         _trail.time = _initialTrailTime;
         yield return null;
     }

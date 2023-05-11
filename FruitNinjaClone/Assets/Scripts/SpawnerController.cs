@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
@@ -10,11 +11,12 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] Transform _minSpawnPointTransform;
     [SerializeField] Transform _maxSpawnPointTransform;
     [SerializeField] float _delayBetweenBursts = 5f;
-    [SerializeField] int _burstSize = 1;
+    [SerializeField] int _throwCount = 1;
     float _timeCounter;
     bool _isActive;
     int _burstCounter;
-
+    int _burstSize;
+    PoolID _lastFruit = PoolID.Watermelon;
     Transform _transform;
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class SpawnerController : MonoBehaviour
         _isActive = true;
         _timeCounter = 0f;
         _burstCounter = 0;
+        _throwCount = 1;
         _burstSize = 1;
     }
     void HandleOnGameOver()
@@ -50,30 +53,56 @@ public class SpawnerController : MonoBehaviour
         _timeCounter += Time.deltaTime;
         if(_timeCounter>_delayBetweenBursts)
         {
-            if (_burstCounter > 10)
-                _burstSize = 2;
-            else if (_burstCounter > 16)
-                _burstSize = Random.Range(3,5);
-            else if (_burstCounter > 25)
-                _burstSize = Random.Range(4,7);
-            SpawnThrowRandomFruitPosAngle(_burstSize);
+            if (_burstCounter > 5)
+            {
+                _throwCount = 2;
+            }
+            else if (_burstCounter > 15)
+            {
+                _burstSize = Random.Range(1, 4);
+                _throwCount = Random.Range(2,5);
+            }
+            else if (_burstCounter > 30)
+            {
+                _burstSize = Random.Range(2, 5);
+                _throwCount = Random.Range(3, 6);
+            }
+            else if (_burstCounter > 50)
+            {
+                _burstSize = Random.Range(3, 6);
+                _throwCount = Random.Range(3, 7);
+            }
+            SpawnThrowRandomFruitPosAngle(_throwCount, _burstSize);
             _timeCounter = 0;
             _burstCounter++;
         }
 
     }
-    void SpawnThrowRandomFruitPosAngle(int count = 1)
+    void SpawnThrowRandomFruitPosAngle(int count = 1, int burstCount =1)
     {
         //Order is important
         for (int i = 0; i < count; i++)
         {
             SetRandomPos();
             SetRandomAngle();
-            SpawnAndThrowRandomFruitOrBomb();
+
+            StopAllCoroutines();
+            StartCoroutine(ThrowFruitWithDelays(burstCount, Random.Range(0.5f, 3f)));
+            
+            
         }
 
     }
-    
+    IEnumerator ThrowFruitWithDelays(int count=1, float delay=0.5f)
+    {
+        SpawnAndThrowRandomFruitOrBomb();
+        for (int i = 1; i < count; i++)
+        {
+            yield return new WaitForSeconds(delay/count);
+            SpawnAndThrowRandomFruitOrBomb();
+        }
+        yield return null;
+    }
     void SpawnAndThrowRandomFruitOrBomb()
     {
         if(Random.value<_bombProbability)
@@ -83,39 +112,56 @@ public class SpawnerController : MonoBehaviour
            // BombController newBomb = Instantiate(_bombPrefab, _transform.position, _transform.rotation);
             newBomb.Rb.AddForce(_transform.up * Random.Range(_minThrowForce, _maxThrowForce));
             newBomb.Rb.AddTorque(_transform.forward * Random.Range(-300f,300f));
+            SoundManager.Instance.PlayBombThrowSound();
         }
         else
         {
             // FruitController newFruitRb = Instantiate(_fruitPrefabs[Random.Range(0, _fruitPrefabs.Length)], _transform.position, _transform.rotation);
-            PoolID randomFruitPoolId;
-            switch (Random.Range(0,5))
+
+            
+            PoolID randomFruitPoolId = RandomFruit();
+            while (randomFruitPoolId == _lastFruit)
             {
-                case 1:
-                    randomFruitPoolId = PoolID.Apple;
-                    break;
-                case 2:
-                    randomFruitPoolId = PoolID.Watermelon;
-                    break;
-                case 3:
-                    randomFruitPoolId = PoolID.Kiwi;
-                    break;
-                case 4:
-                    randomFruitPoolId = PoolID.Lemon;
-                    break;
-                case 0:
-                    randomFruitPoolId = PoolID.Orange;
-                    break;
-                default:
-                    randomFruitPoolId = PoolID.Apple;
-                    break;
+                randomFruitPoolId = RandomFruit();
             }
+            _lastFruit = randomFruitPoolId;
             FruitController newFruit = ObjectPoolManager.Instance.GetFruitPrefab(randomFruitPoolId);
             newFruit.transform.position = this.transform.position;
             newFruit.transform.rotation = this.transform.rotation;
             newFruit.WholeFruitRb.AddForce(_transform.up * Random.Range(_minThrowForce,_maxThrowForce));
+            SoundManager.Instance.PlaySoundRandomPitch(2, 0.85f, 1.01f);
             //Can be added AddTorque
         }
     }
+    PoolID RandomFruit()
+    {
+        PoolID randomFruitPoolId;
+        switch (Random.Range(0, 5))
+        {
+            case 1:
+                randomFruitPoolId = PoolID.Apple;
+                break;
+            case 2:
+                randomFruitPoolId = PoolID.Watermelon;
+                break;
+            case 3:
+                randomFruitPoolId = PoolID.Kiwi;
+                break;
+            case 4:
+                randomFruitPoolId = PoolID.Lemon;
+                break;
+            case 0:
+                randomFruitPoolId = PoolID.Orange;
+                break;
+            default:
+                randomFruitPoolId = PoolID.Apple;
+                break;
+        }
+        return randomFruitPoolId;
+    }
+
+
+
     void SetRandomPos()
     {
         Vector3 randomPos = new Vector3(Random.Range(_minSpawnPointTransform.position.x, _maxSpawnPointTransform.position.x), _transform.position.y, _transform.position.z);
