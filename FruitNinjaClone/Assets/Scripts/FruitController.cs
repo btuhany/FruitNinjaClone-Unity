@@ -24,6 +24,7 @@ public class FruitController : MonoBehaviour
     {
         _colliders = GetComponentsInChildren<Collider>();
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
+        _rigidbodies[0].sleepThreshold = 0.0f;
         _particle = GetComponentInChildren<ParticleSystem>();
         _splashColor = GetComponentInChildren<MeshRenderer>().material.color;
         _halfFruitsTransforms = _slicedFruit.GetComponentsInChildren<Transform>();

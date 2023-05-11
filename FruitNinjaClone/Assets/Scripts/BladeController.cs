@@ -144,7 +144,7 @@ public class BladeController : MonoBehaviour
         yield return _comboCooldown;
         if (ComboCounter > 2)
         {
-            Debug.Log("Combo!");
+            SoundManager.Instance.PlaySoundRandomPitch(9,1f,1.35f);
             OnComboEvent?.Invoke();
         }
         ComboCounter = 0;

@@ -379,7 +379,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.9433962, g: 0.91639966, b: 0.88554645, a: 1}
+  m_Color: {r: 0.9622642, g: 0.92706716, b: 0.8851015, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -417,7 +417,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4033
   m_RenderingLayerMask: 1
   m_Lightmapping: 1
   m_LightShadowCasterMode: 0
@@ -915,6 +915,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 985337851541982601, guid: 4b7e287030b31304785410c6c1213eb4, type: 3}
+      propertyPath: m_Volume
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 985337851593705363, guid: 4b7e287030b31304785410c6c1213eb4, type: 3}
       propertyPath: m_Name
       value: '[SoundManager]'
@@ -962,6 +966,10 @@ PrefabInstance:
     - target: {fileID: 985337851593705364, guid: 4b7e287030b31304785410c6c1213eb4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3589844079748520497, guid: 4b7e287030b31304785410c6c1213eb4, type: 3}
+      propertyPath: m_Volume
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b7e287030b31304785410c6c1213eb4, type: 3}
@@ -1563,6 +1571,10 @@ PrefabInstance:
     - target: {fileID: 7566796424657618099, guid: 954e3df4e8e05194384b568d921fed9c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566796424657618101, guid: 954e3df4e8e05194384b568d921fed9c, type: 3}
+      propertyPath: _bombProbability
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 7566796424657618101, guid: 954e3df4e8e05194384b568d921fed9c, type: 3}
       propertyPath: _maxSpawnPointTransform

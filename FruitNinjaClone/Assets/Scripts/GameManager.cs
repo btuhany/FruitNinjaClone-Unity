@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         CurrentScore = 0;
         Lives = 3;
         InvokeUIEvents();
+        SoundManager.Instance.StopAllSounds();
         SoundManager.Instance.PlaySound(4);
         SoundManager.Instance.PlaySoundDelayed(0);
         StartCoroutine(StartGameWithCountdownDelay(_startDelay));
