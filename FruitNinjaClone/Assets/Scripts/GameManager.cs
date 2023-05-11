@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     public event System.Action OnScoreChanged;
     public event System.Action OnLivesChanged;
     public event System.Action OnGameOver;
+    public event System.Action OnGameStart;
 
-    public bool IsGameOn;
+    bool _isGameOn;
     [HideInInspector] public int CurrentScore=0;
     [HideInInspector] public int BestScore=0;
     [HideInInspector] public int Lives = 3;
@@ -25,30 +26,36 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InvokeUIEvents();
-        BladeController.Instance.CanReadInput = false;
-        IsGameOn = false;
+     //   BladeController.Instance.CanReadInput = false;
         StartCoroutine(StartGameWithCountdownDelay(_startDelay));
     }
     public void Restart()
     {
-        Debug.Log("Restart");
+        // BladeController.Instance.CanReadInput = false;
+        CurrentScore = 0;
+        Lives = 3;
+        InvokeUIEvents();
+        StartCoroutine(StartGameWithCountdownDelay(_startDelay));
     }
     public void StartTheGame()
     {
-        IsGameOn = true;
-        BladeController.Instance.CanReadInput = true;
+        OnGameStart?.Invoke();
+        _isGameOn = true;
+       // BladeController.Instance.CanReadInput = true; //Obsrv pattern? event
     }
     public void GameOver()
     {
+        if (!_isGameOn) return;
+        _isGameOn = false;
+        OnGameOver?.Invoke();
         if(BestScore>=LastBestScore)
         {
             LastBestScore=BestScore;
             OnBestScoreChanged?.Invoke();
         }
-        BladeController.Instance.CanReadInput = false;
-        Time.timeScale = 0f;
+       // BladeController.Instance.CanReadInput = false;  //Obsrv pattern? event
+ 
         
-        OnGameOver?.Invoke();
     }
     public void IncreaseScore()
     {

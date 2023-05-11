@@ -9,30 +9,69 @@ public class SpawnerController : MonoBehaviour
     [SerializeField][Range(0, 80)] float _maxAngle;
     [SerializeField] Transform _minSpawnPointTransform;
     [SerializeField] Transform _maxSpawnPointTransform;
+    [SerializeField] float _delayBetweenBursts = 5f;
+    [SerializeField] int _burstSize = 1;
+    float _timeCounter;
+    bool _isActive;
+    int _burstCounter;
 
     Transform _transform;
     private void Awake()
     {
         _transform = this.transform;
     }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStart += HandleOnGameStart;
+        GameManager.Instance.OnGameOver += HandleOnGameOver;
+    }
+    void HandleOnGameStart()
+    {
+        _isActive = true;
+        _timeCounter = 0f;
+        _burstCounter = 0;
+        _burstSize = 1;
+    }
+    void HandleOnGameOver()
+    {
+        _isActive = false;
+    }
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        //if(Input.GetKey(KeyCode.Space))
+        //{
+        //    SpawnThrowRandomFruitPosAngle();
+        //}
+        //else if(Input.GetKeyDown(KeyCode.F))
+        //{
+        //    SpawnThrowRandomFruitPosAngle();
+        //}
+        if (!_isActive) return;
+        _timeCounter += Time.deltaTime;
+        if(_timeCounter>_delayBetweenBursts)
         {
-            SpawnThrowRandomFruitPosAngle();
-        }
-        else if(Input.GetKeyDown(KeyCode.F))
-        {
-            SpawnThrowRandomFruitPosAngle();
+            if (_burstCounter > 10)
+                _burstSize = 2;
+            else if (_burstCounter > 16)
+                _burstSize = Random.Range(3,5);
+            else if (_burstCounter > 25)
+                _burstSize = Random.Range(4,7);
+            SpawnThrowRandomFruitPosAngle(_burstSize);
+            _timeCounter = 0;
+            _burstCounter++;
         }
 
     }
-    void SpawnThrowRandomFruitPosAngle()
+    void SpawnThrowRandomFruitPosAngle(int count = 1)
     {
         //Order is important
-        SetRandomPos();
-        SetRandomAngle();
-        SpawnAndThrowRandomFruitOrBomb();
+        for (int i = 0; i < count; i++)
+        {
+            SetRandomPos();
+            SetRandomAngle();
+            SpawnAndThrowRandomFruitOrBomb();
+        }
+
     }
     
     void SpawnAndThrowRandomFruitOrBomb()
@@ -80,6 +119,11 @@ public class SpawnerController : MonoBehaviour
     void SetRandomPos()
     {
         Vector3 randomPos = new Vector3(Random.Range(_minSpawnPointTransform.position.x, _maxSpawnPointTransform.position.x), _transform.position.y, _transform.position.z);
+        if (Mathf.Abs(_transform.position.x - randomPos.x) < 1f)
+        {
+            SetRandomPos();
+            return;
+        }
         _transform.position = randomPos;
     }
     void SetRandomAngle()
@@ -87,11 +131,11 @@ public class SpawnerController : MonoBehaviour
         Quaternion randomRotation;
         if (_transform.position.x>(_minSpawnPointTransform.position.x + _maxSpawnPointTransform.position.x)/2)
         {
-            randomRotation = Quaternion.Euler(0, 0, Random.Range(0, _maxAngle));
+            randomRotation = Quaternion.Euler(0, 0, Random.Range(_minAngle/3, _maxAngle));
         }
         else
         {
-            randomRotation = Quaternion.Euler(0, 0, Random.Range(_minAngle, 0));  
+            randomRotation = Quaternion.Euler(0, 0, Random.Range(_minAngle, _maxAngle/3));  
         }
         _transform.rotation = randomRotation;
     }

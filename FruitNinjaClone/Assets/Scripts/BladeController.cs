@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -13,32 +14,47 @@ public class BladeController : MonoBehaviour
     public Vector3 Direction { get; private set; }
     public Vector3 TransformPos { get => _transform.position;}
     public float Velocity { get => Direction.magnitude/Time.deltaTime; }
+  
 
     public static BladeController Instance;
-    public bool CanReadInput = true;
+    bool _canReadInput;
+    float _initialTrailTime;
     private void Awake()
     {
         Instance = this;
-        CanReadInput = true;
         _collider = GetComponent<SphereCollider>();
         _mainCam = Camera.main;
         _transform = transform;
         _initialMainCamZpos = _mainCam.transform.position.z;
         _trail = GetComponentInChildren<TrailRenderer>();
+        _initialTrailTime = _trail.time;
         _initialBladeZpos = _transform.position.z;
     }
     private void OnEnable()
     {
+        DeactivateBlade();
+        GameManager.Instance.OnGameOver += HandleOnGameOver;
+        GameManager.Instance.OnGameStart += HandleOnGameStart;
+    }
+    void HandleOnGameOver()
+    {
+        _canReadInput = false;
+        StartCoroutine(TrailEffect());
+    }
+    void HandleOnGameStart()
+    {
+        _canReadInput = true;
+        //_trail.time = _initialTrailTime;
         DeactivateBlade();
     }
     private void OnDisable()
     {
         DeactivateBlade();
     }
-
+    
     private void Update()
     {
-        if (!CanReadInput) return;
+        if (!_canReadInput) return;
         if(Input.GetMouseButtonDown(0))
         {
             ActivateBlade();
@@ -83,6 +99,13 @@ public class BladeController : MonoBehaviour
         _transform.position = newPos;
 
         
+    }
+    IEnumerator TrailEffect()
+    {
+        _trail.time = 10f;
+        yield return new WaitForSeconds(0.7f);
+        _trail.time = _initialTrailTime;
+        yield return null;
     }
 
 
