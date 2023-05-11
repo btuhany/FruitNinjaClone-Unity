@@ -14,12 +14,14 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] int _throwCount = 1;
     float _timeCounter;
     bool _isActive;
-    int _burstCounter;
+  
     int _burstSize;
+    float _initalBurstDelay;
     PoolID _lastFruit = PoolID.Watermelon;
     Transform _transform;
     private void Awake()
     {
+        _initalBurstDelay = _delayBetweenBursts;
         _transform = this.transform;
     }
     private void OnEnable()
@@ -31,7 +33,6 @@ public class SpawnerController : MonoBehaviour
     {
         _isActive = true;
         _timeCounter = 0f;
-        _burstCounter = 0;
         _throwCount = 1;
         _burstSize = 1;
     }
@@ -53,28 +54,44 @@ public class SpawnerController : MonoBehaviour
         _timeCounter += Time.deltaTime;
         if(_timeCounter>_delayBetweenBursts)
         {
-            if (_burstCounter > 5)
+            if (GameManager.Instance.CurrentScore > 100)
             {
-                _throwCount = 2;
+                _burstSize = Random.Range(5, 7);
+                _throwCount = Random.Range(4, 7);
+
             }
-            else if (_burstCounter > 15)
+            else if (GameManager.Instance.CurrentScore > 75)
             {
-                _burstSize = Random.Range(1, 4);
-                _throwCount = Random.Range(2,5);
+                _burstSize = Random.Range(4, 7);
+                _throwCount = Random.Range(3, 7);
+ 
             }
-            else if (_burstCounter > 30)
+            else if (GameManager.Instance.CurrentScore > 55)
             {
                 _burstSize = Random.Range(2, 5);
                 _throwCount = Random.Range(3, 6);
+           
             }
-            else if (_burstCounter > 50)
+            else if (GameManager.Instance.CurrentScore > 35)
             {
-                _burstSize = Random.Range(3, 6);
-                _throwCount = Random.Range(3, 7);
+                _burstSize = Random.Range(2, 5);
+                _throwCount = Random.Range(2, 5);
             }
+            else if (GameManager.Instance.CurrentScore > 15)
+            {
+                _burstSize = Random.Range(1, 5);
+                _throwCount = Random.Range(2,4);
+            }
+            else if (GameManager.Instance.CurrentScore > 5)
+            {
+                _burstSize = Random.Range(1, 5);
+            }
+            _delayBetweenBursts = _initalBurstDelay + _burstSize * 0.15f;
+            _delayBetweenBursts += _throwCount * 0.3f;
             SpawnThrowRandomFruitPosAngle(_throwCount, _burstSize);
             _timeCounter = 0;
-            _burstCounter++;
+            
+            
         }
 
     }
@@ -87,7 +104,7 @@ public class SpawnerController : MonoBehaviour
             SetRandomAngle();
 
             StopAllCoroutines();
-            StartCoroutine(ThrowFruitWithDelays(burstCount, Random.Range(0.5f, 3f)));
+            StartCoroutine(ThrowFruitWithDelays(burstCount, Random.Range(0.5f, 1f)));
             
             
         }

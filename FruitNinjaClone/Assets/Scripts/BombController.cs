@@ -23,7 +23,7 @@ public class BombController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (_isExploded) return;
+        if (_isExploded || !GameManager.Instance.IsGameOn) return;
         if(other.CompareTag("Player"))
         {
             _isExploded = true;

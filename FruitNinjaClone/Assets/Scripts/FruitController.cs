@@ -64,6 +64,7 @@ public class FruitController : MonoBehaviour
     }
     public void GetSliced()
     {
+        BladeController.Instance.IncreaseComboCounter();
         _transform.position = _wholeFruit.transform.position;
         _colliders[0].enabled = false;
         _slicedFruit.SetActive(true);

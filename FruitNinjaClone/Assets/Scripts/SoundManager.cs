@@ -26,7 +26,7 @@ public class SoundManager : MonoBehaviour
     }
     public void PlaySoundRandomPitch(int auidoSourceIndex, float minPitch, float maxPitch)
     {
-        if (_audioSources[auidoSourceIndex].isPlaying) return;
+       // if (_audioSources[auidoSourceIndex].isPlaying) return;
         _audioSources[auidoSourceIndex].pitch = Random.Range(minPitch, maxPitch+0.01f);
         _audioSources[auidoSourceIndex].Play();
     }

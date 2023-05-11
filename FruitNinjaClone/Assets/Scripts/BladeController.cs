@@ -14,12 +14,15 @@ public class BladeController : MonoBehaviour
     public Vector3 Direction { get; private set; }
     public Vector3 TransformPos { get => _transform.position;}
     public float Velocity { get => Direction.magnitude/Time.deltaTime; }
-  
 
+  
     public static BladeController Instance;
     bool _canReadInput;
     bool _canMakeSound;
     float _initialTrailTime;
+    public float ComboCounter;
+    public event System.Action OnComboEvent;
+
     private void Awake()
     {
         Instance = this;
@@ -108,7 +111,7 @@ public class BladeController : MonoBehaviour
 
         
     }
-    WaitForSeconds soundDelay = new WaitForSeconds(0.15f);
+    WaitForSeconds soundDelay = new WaitForSeconds(0.2f);
     WaitForSeconds trailEffect = new WaitForSeconds(0.7f);
     IEnumerator SoundDelay()
     {
@@ -125,6 +128,27 @@ public class BladeController : MonoBehaviour
         _trail.time = _initialTrailTime;
         yield return null;
     }
-
+    IEnumerator comboCountProcess;
+    public void IncreaseComboCounter()
+    { 
+        if(comboCountProcess != null)
+            StopCoroutine(comboCountProcess);
+        comboCountProcess = ComboCountProcess();
+        StartCoroutine(comboCountProcess);
+        
+    }
+    WaitForSeconds _comboCooldown = new WaitForSeconds(0.3f);
+    IEnumerator ComboCountProcess()
+    {
+        ComboCounter++;
+        yield return _comboCooldown;
+        if (ComboCounter > 2)
+        {
+            Debug.Log("Combo!");
+            OnComboEvent?.Invoke();
+        }
+        ComboCounter = 0;
+        yield return null;
+    }
 
 }

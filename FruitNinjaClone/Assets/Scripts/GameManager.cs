@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public event System.Action OnGameOver;
     public event System.Action OnGameStart;
 
-    bool _isGameOn;
+    public bool IsGameOn;
     [HideInInspector] public int CurrentScore=0;
     [HideInInspector] public int BestScore=0;
     [HideInInspector] public int Lives = 3;
@@ -46,14 +46,14 @@ public class GameManager : MonoBehaviour
     public void StartTheGame()
     {
         OnGameStart?.Invoke();
-        _isGameOn = true;
+        IsGameOn = true;
         
        // BladeController.Instance.CanReadInput = true; //Obsrv pattern? event
     }
     public void GameOver()
     {
-        if (!_isGameOn) return;
-        _isGameOn = false;
+        if (!IsGameOn) return;
+        IsGameOn = false;
         OnGameOver?.Invoke();
         SoundManager.Instance.StopAllSounds();
         SoundManager.Instance.PlaySoundDelayed(6);

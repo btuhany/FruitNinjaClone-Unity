@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3180099248655662373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3180099248655662375}
+  - component: {fileID: 3180099248655662374}
+  m_Layer: 0
+  m_Name: '[ObjectPoolManager]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3180099248655662375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3180099248655662373}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3180099248655662374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3180099248655662373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069b721ab6a0ac44993597cee6d251b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolIncrementAtZeroCount: 5
+  _fruitObjectPools:
+  - Prefab: {fileID: 3493752162276643676, guid: daac09010a324d44ca21335f234f0b6c, type: 3}
+    PoolSize: 5
+    PoolID: 0
+  - Prefab: {fileID: 5401323859624643000, guid: cab100900b68d734eb6f66604dabb748, type: 3}
+    PoolSize: 5
+    PoolID: 3
+  - Prefab: {fileID: 9221596611576610611, guid: 07b1261afe8dec04cbcba1fe7f0ffbaf, type: 3}
+    PoolSize: 5
+    PoolID: 2
+  - Prefab: {fileID: 8237076889114038251, guid: f4d192d9f7f80bd4f96945d26097f191, type: 3}
+    PoolSize: 5
+    PoolID: 4
+  - Prefab: {fileID: 6703188543006124104, guid: cb2dc84b50e9d92458ace77bf44a17e6, type: 3}
+    PoolSize: 5
+    PoolID: 1
+  _bombObjectPool:
+    Prefab: {fileID: 8663880411883402065, guid: 2d74b94f07d22c54cb3b32e3591ece86, type: 3}
+    PoolSize: 5
+    PoolID: 5
+  _splashObjectPool:
+    Prefab: {fileID: -2484220536484401600, guid: 411a8dbb206e4534db73b228cec5ad8c, type: 3}
+    PoolSize: 10
+    PoolID: 6

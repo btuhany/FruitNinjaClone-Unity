@@ -1,5 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour
@@ -8,6 +10,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] GameObject _readyText;
     [SerializeField] GameObject _goText;
     [SerializeField] Image _bombEffectImage;
+    [SerializeField] TextMeshProUGUI _comboText;
 
     private void Awake()
     {
@@ -22,6 +25,7 @@ public class GameUIController : MonoBehaviour
 
         GameManager.Instance.OnGameOver += HandleOnGameOver;
         GameManager.Instance.OnGameStart += HandleOnGameStart;
+        BladeController.Instance.OnComboEvent+= HandleOnComboEvent;
     }
     void HandleOnGameOver()
     {
@@ -48,6 +52,27 @@ public class GameUIController : MonoBehaviour
     public void StartCountDown(float delay)
     {
         StartCoroutine(ReadyGoCountdown(delay));
+    }
+    void HandleOnComboEvent()
+    {
+        _comboText.SetText("+" + BladeController.Instance.ComboCounter.ToString() + " FRUIT COMBO");
+        _comboText.transform.position = BladeController.Instance.TransformPos + Vector3.up * 0.5f;
+        StartCoroutine(FadeOut());
+    }
+    IEnumerator FadeOut()
+    {
+        float elapsed = 0f;
+        float duration = 3f;
+        _comboText.gameObject.SetActive(true);
+        while (elapsed < duration)
+        {
+            float t = Mathf.Clamp01(elapsed / duration);
+            _comboText.color = Color.Lerp(Color.white, Color.clear, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        _comboText.gameObject.SetActive(false);
+        yield return null;
     }
     IEnumerator ReadyGoCountdown(float delay)
     {
